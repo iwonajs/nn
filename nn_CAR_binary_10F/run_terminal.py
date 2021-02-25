@@ -1,5 +1,5 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
-import runmodel as r
+import run_model as r
 import tensorflow as tf
 import gc
 import argparse
@@ -52,5 +52,4 @@ if __name__ == "__main__":
 
     use_gpu()
     with tf.device('/GPU:0'):
-        #print("end")
         run(run_i, fold_i, args.img, args.one, args.weights, args.model)
