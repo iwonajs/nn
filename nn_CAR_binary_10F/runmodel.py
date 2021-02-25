@@ -1,23 +1,13 @@
 import json
-import numpy as np
 import os
-import sys
-import shutil
-import time
 import tensorflow as tf
 import data_generator as gen
 from tensorflow.keras.callbacks import CSVLogger
 from tensorflow.keras.callbacks import ModelCheckpoint
-import tensorflow.keras.backend as K
-from varname import nameof
 import models as mm
-#config = tf.compat.v1.ConfigProto()
-#config.gpu_options.allow_growth = True
 
-#config = tf.ConfigProto()
-#config.gpu_options.allow_growth = True
 
-class Run_Model:
+class RunModel:
 
     def __init__(self):
         self.config_path = "config.json"
@@ -46,7 +36,6 @@ class Run_Model:
             os.mkdir(results_fold_path)
 
         return results_model_path, results_run_path, results_fold_path, "fold_" + str(fold_i)
-
 
     def fold_x(self, run_i, fold_i, useImgFlag, flag_save_weights, model_id):
 
@@ -103,8 +92,6 @@ class Run_Model:
                                callbacks=callbacks_list,
                                use_multiprocessing=True)
 
-
-
     def fold_x_test_one(self, run_i, fold_i, useImgFlag, flag_save_weights, model_id):
 
         # MODEL and OUTPUT PATHS: MODEL -> RUN -> FOLD
@@ -132,7 +119,6 @@ class Run_Model:
                 train_indices += [id]
             id += 1
 
-
         gent = gen.DeepTrace_DataGenerator(train_indices,
                                            observations_key_triplets,
                                            nn.feed_flag,
@@ -158,5 +144,5 @@ class Run_Model:
         #print(batch0[0][2].shape)
 
         nn.model.fit(x=batch0[0], y=batch0[1], epochs=epochs, callbacks=callbacks_list)
-        
+
 

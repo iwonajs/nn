@@ -1,5 +1,5 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
-import run_model as r
+import runmodel as r
 import tensorflow as tf
 import gc
 import argparse
@@ -8,7 +8,7 @@ import argparse
 
 
 def run(run_i, fold_i, flag_use_img, flag_one_obs, flag_save_weights, model_id):
-    run_model = r.Run_Model()
+    run_model = r.RunModel()
     if flag_one_obs:
         run_model.fold_x_test_one(run_i, fold_i, flag_use_img, flag_save_weights, model_id)
     else:
@@ -17,7 +17,7 @@ def run(run_i, fold_i, flag_use_img, flag_one_obs, flag_save_weights, model_id):
     gc.collect()
 
 
-def x():
+def use_gpu():
     gpus = tf.config.experimental.list_physical_devices('GPU')
     assert len(gpus) > 0
     if gpus:
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         run_i = number // fold_count
         fold_i = number % fold_count
 
-    x()
+    use_gpu()
     with tf.device('/GPU:0'):
         #print("end")
         run(run_i, fold_i, args.img, args.one, args.weights, args.model)
