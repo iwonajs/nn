@@ -1,0 +1,12 @@
+Job ID: 45572615
+Array Job ID: 45572615_99
+Cluster: graham
+User/Group: iwonajs/iwonajs
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 6
+CPU Utilized: 00:44:41
+CPU Efficiency: 23.47% of 03:10:24 core-walltime
+Job Wall-clock time: 00:31:44
+Memory Utilized: 5.35 GB
+Memory Efficiency: 17.12% of 31.25 GB

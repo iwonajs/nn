@@ -1,0 +1,1 @@
+rsync -rltv *.py -o *.sh -o *.json iwonajs@graham.computecanada.ca:~/projects/def-miranska/iwonajs/nn_CAR_binary_10F/

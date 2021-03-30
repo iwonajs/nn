@@ -5,14 +5,13 @@ import gc
 import argparse
 
 
+def run(run__i, fold__i, flag_one_obs, flag_chkpt, model_id, results_flat_dir, tag):
+    run_model = r.RunModel(run__i, fold__i, flag_chkpt, model_id, results_flat_dir, tag)
 
-
-def run(run_i, fold_i, flag_use_img, flag_one_obs, flag_save_weights, model_id):
-    run_model = r.RunModel()
     if flag_one_obs:
-        run_model.fold_x_test_one(run_i, fold_i, flag_use_img, flag_save_weights, model_id)
+        run_model.fold_x_test_one()
     else:
-        run_model.fold_x(run_i, fold_i, flag_use_img, flag_save_weights, model_id)
+        run_model.fold_x()
     tf.keras.backend.clear_session()
     gc.collect()
 
@@ -27,6 +26,7 @@ def use_gpu():
             print(gpu.device_type)
             tf.config.experimental.set_memory_growth(gpu, True)
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--number', '-n', type=int, default=-1)
@@ -34,10 +34,14 @@ if __name__ == "__main__":
     parser.add_argument('--run', '-r', type=int, default=-1)
     parser.add_argument('--fold', '-f', type=int, default=-1)
     parser.add_argument('--gpu', '-g', help="select gpu id", type=int)
-    parser.add_argument("--img", '-i', help="use the images in nn", type=bool, default=True)
-    parser.add_argument("--one", "-o", help="just one observation", type=bool, default=False)
-    parser.add_argument("--weights", "-w", help="save weights between epochs", type=bool, default=False)
     parser.add_argument("--model", "-m", help="", type=int, default=1)
+
+    parser.add_argument("--dflat", "-d", help="results in flat folder", type=bool, default=False)
+    parser.add_argument("--chkpt", "-c", help="checkpoints", type=bool, default=False)
+    parser.add_argument("--one", "-o", help="just one observation", type=bool, default=False)
+
+    parser.add_argument("--tag", "-t", help="note or tag", type=str, default="")
+
     args = parser.parse_args()
     print("args:", args)
 
@@ -52,4 +56,5 @@ if __name__ == "__main__":
 
     use_gpu()
     with tf.device('/GPU:0'):
-        run(run_i, fold_i, args.img, args.one, args.weights, args.model)
+        print("ARGS:", "dflat:", args.dflat, "chkpt:", args.chkpt, "one:", args.one)
+        run(run_i, fold_i, args.one, args.chkpt, args.model, args.dflat, args.tag)
